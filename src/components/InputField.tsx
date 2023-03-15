@@ -1,9 +1,35 @@
+import React, { useRef } from "react";
 import "./styles.css";
 
-const InputField: React.FC = () => {
+interface Props {
+  input: string;
+  setInput: React.Dispatch<React.SetStateAction<string>>;
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+}
+
+const InputField: React.FC<Props> = ({ input, setInput, handleSubmit }) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInput(e.target.value);
+  };
+
   return (
-    <form className="input">
-      <input type="text" placeholder="Enter a Todo" className="input__box" />
+    <form
+      className="input"
+      onSubmit={(e) => {
+        handleSubmit(e);
+        inputRef.current?.blur();
+      }}
+    >
+      <input
+        type="text"
+        placeholder="Enter a Todo"
+        className="input__box"
+        ref={inputRef}
+        onChange={handleChange}
+        value={input}
+      />
       <button type="submit" className="input_submit">
         GO
       </button>
