@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./App.css";
 import InputField from "./components/InputField";
+import TodoList from "./components/TodoList";
 import { Todo } from "./models/models";
 
 const App: React.FC = () => {
@@ -20,8 +21,6 @@ const App: React.FC = () => {
     setInput("");
   };
 
-  console.log(todos);
-
   return (
     <div className="App">
       <span className="heading">Taskify</span>
@@ -31,11 +30,7 @@ const App: React.FC = () => {
         handleSubmit={handleSubmit}
       />
 
-      {todos.map((todo, index) => (
-        <ul key={index}>
-          <li>{todo.title}</li>
-        </ul>
-      ))}
+      <TodoList todos={todos} setTodos={setTodos} />
     </div>
   );
 };
