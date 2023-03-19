@@ -12,6 +12,9 @@ const App: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!input) return;
+
     setTodos([
       ...todos,
       {
@@ -64,6 +67,7 @@ const App: React.FC = () => {
     <DragDropContext onDragEnd={onDragEnd}>
       <div className="App">
         <span className="heading">Taskify</span>
+
         <InputField
           input={input}
           setInput={setInput}

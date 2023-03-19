@@ -26,6 +26,8 @@ const SingleTodo: React.FC<Props> = ({ todo, setTodos, index }) => {
   };
 
   const handleDone = () => {
+    if (isEdit) return;
+
     setTodos((prev) =>
       prev.map((item) => {
         if (item.id === todo.id) {
@@ -41,6 +43,11 @@ const SingleTodo: React.FC<Props> = ({ todo, setTodos, index }) => {
 
   const handleEdit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (editInput === "") {
+      return;
+    }
+
     setTodos((prev) =>
       prev.map((item) => {
         if (item.id === todo.id) {
@@ -57,9 +64,9 @@ const SingleTodo: React.FC<Props> = ({ todo, setTodos, index }) => {
 
   return (
     <Draggable draggableId={todo.id.toString()} index={index}>
-      {(provided) => (
+      {(provided, snapshot) => (
         <form
-          className="todos__single"
+          className={`todos__single ${snapshot.isDragging ? "drag" : ""}`}
           onSubmit={(e) => {
             handleEdit(e);
           }}
@@ -74,6 +81,9 @@ const SingleTodo: React.FC<Props> = ({ todo, setTodos, index }) => {
               ref={inputRef}
               className="todos__single--text"
               onChange={(e) => setEditInput(e.target.value)}
+              style={{
+                borderRadius: "10px",
+              }}
             />
           ) : todo.isDone ? (
             <s className="todos__single--text">{todo.title}</s>
@@ -81,22 +91,28 @@ const SingleTodo: React.FC<Props> = ({ todo, setTodos, index }) => {
             <span className="todos__single--text">{todo.title}</span>
           )}
           <div>
-            <span
-              className="icon"
-              onClick={() => {
-                if (!todo.isDone) {
+            {!todo.isDone && (
+              <span
+                className="icon"
+                onClick={() => {
                   setIsEdit(!isEdit);
-                }
-              }}
-            >
-              <AiFillEdit />
-            </span>
-            <span className="icon">
-              <AiFillDelete onClick={handleDelete} />
-            </span>
-            <span className="icon">
-              <MdOutlineDone onClick={handleDone} />
-            </span>
+                  setEditInput(todo.title);
+                }}
+              >
+                <AiFillEdit />
+              </span>
+            )}
+
+            {!isEdit && (
+              <>
+                <span className="icon">
+                  <AiFillDelete onClick={handleDelete} />
+                </span>
+                <span className="icon">
+                  <MdOutlineDone onClick={handleDone} />
+                </span>
+              </>
+            )}
           </div>
         </form>
       )}
