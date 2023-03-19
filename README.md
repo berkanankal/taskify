@@ -1,46 +1,45 @@
-# Getting Started with Create React App
+# Taskify
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Taskify is a project I created to improve my Typescript knowledge. With Taskify, you can manage your tasks.
 
-## Available Scripts
+## Demo
 
-In the project directory, you can run:
+https://taskify-project.netlify.app/
 
-### `npm start`
+## Tech Stack
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- [React](https://reactjs.org/) - A JavaScript library for building user interfaces.
+- [Typescript](https://www.typescriptlang.org/) - A syntactic superset of JavaScript which adds static typing.
+- [React Icons](https://react-icons.github.io/react-icons/) - A small library that helps you add icons (from all different icon libraries) to your React apps.
+- [React Beautiful Dnd](https://github.com/atlassian/react-beautiful-dnd) - A React.js library used to make "Drag and Drop" operations easier in web applications.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Run Locally
 
-### `npm test`
+First clone this repository.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+git clone https://github.com/berkanankal/taskify.git
+```
 
-### `npm run build`
+Go to the project directory.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+cd taskify
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Install dependencies. Make sure you already have [`nodejs`](https://nodejs.org/en/) & [`npm`](https://www.npmjs.com/) installed in your system.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+npm install
+```
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Run the app.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+npm start
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Screenshots
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+...
