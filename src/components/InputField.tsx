@@ -24,9 +24,8 @@ const InputField: React.FC<Props> = ({ input, setInput, handleSubmit }) => {
     >
       <input
         type="text"
-        placeholder="Enter a Todo"
+        placeholder="Enter a Task"
         className="input__box"
-        ref={inputRef}
         onChange={handleChange}
         value={input}
       />
