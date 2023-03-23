@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
-import { MdOutlineDone } from "react-icons/md";
 import { Todo } from "../models/models";
 import { Draggable } from "react-beautiful-dnd";
 
@@ -25,35 +24,17 @@ const SingleTodo: React.FC<Props> = ({ todo, setTodos, index }) => {
     setTodos((prev) => prev.filter((item) => item.id !== todo.id));
   };
 
-  const handleDone = () => {
-    if (isEdit) return;
-
-    setTodos((prev) =>
-      prev.map((item) => {
-        if (item.id === todo.id) {
-          return {
-            ...item,
-            isDone: !item.isDone,
-          };
-        }
-        return item;
-      })
-    );
-  };
-
   const handleEdit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (editInput === "") {
-      return;
-    }
+    if (editInput.trim() === "") return;
 
     setTodos((prev) =>
       prev.map((item) => {
         if (item.id === todo.id) {
           return {
             ...item,
-            title: editInput,
+            title: editInput.trim(),
           };
         }
         return item;
@@ -107,9 +88,6 @@ const SingleTodo: React.FC<Props> = ({ todo, setTodos, index }) => {
               <>
                 <span className="icon">
                   <AiFillDelete onClick={handleDelete} />
-                </span>
-                <span className="icon">
-                  <MdOutlineDone onClick={handleDone} />
                 </span>
               </>
             )}

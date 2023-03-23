@@ -13,13 +13,13 @@ const App: React.FC = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!input) return;
+    if (!input.trim()) return;
 
     setTodos([
       ...todos,
       {
         id: Date.now(),
-        title: input,
+        title: input.trim(),
         isDone: false,
       },
     ]);
@@ -46,9 +46,11 @@ const App: React.FC = () => {
     // Source Logic
     if (source.droppableId === "TodosList") {
       add = active[source.index];
+      add.isDone = true;
       active.splice(source.index, 1);
     } else {
       add = complete[source.index];
+      add.isDone = false;
       complete.splice(source.index, 1);
     }
 
