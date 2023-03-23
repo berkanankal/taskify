@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import InputField from "./components/InputField";
 import TodoList from "./components/TodoList";
@@ -10,19 +10,36 @@ const App: React.FC = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [completedTodos, setCompletedTodos] = useState<Todo[]>([]);
 
+  useEffect(() => {
+    const todos = localStorage.getItem("todos");
+    const completedTodos = localStorage.getItem("completedTodos");
+
+    if (todos) {
+      setTodos(JSON.parse(todos));
+    }
+
+    if (completedTodos) {
+      setCompletedTodos(JSON.parse(completedTodos));
+    }
+  }, []);
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!input.trim()) return;
 
-    setTodos([
+    const newTodoList = [
       ...todos,
       {
         id: Date.now(),
         title: input.trim(),
         isDone: false,
       },
-    ]);
+    ];
+
+    setTodos(newTodoList);
+    localStorage.setItem("todos", JSON.stringify(newTodoList));
+
     setInput("");
   };
 
@@ -40,17 +57,44 @@ const App: React.FC = () => {
       return;
     }
 
-    let add;
+    let add = {} as Todo;
     let active = todos;
     let complete = completedTodos;
     // Source Logic
     if (source.droppableId === "TodosList") {
       add = active[source.index];
-      add.isDone = true;
+
+      if (destination.droppableId !== "TodosList") {
+        add.isDone = true;
+        let newTodos = todos.filter((todo) => todo.id !== add.id);
+        localStorage.setItem("todos", JSON.stringify(newTodos));
+
+        let newCompletedTodos = [...completedTodos, add];
+        localStorage.setItem(
+          "completedTodos",
+          JSON.stringify(newCompletedTodos)
+        );
+      }
+
       active.splice(source.index, 1);
     } else {
       add = complete[source.index];
-      add.isDone = false;
+
+      if (destination.droppableId !== "TodosRemove") {
+        add.isDone = false;
+
+        let newCompletedTodos = completedTodos.filter(
+          (todo) => todo.id !== add.id
+        );
+        localStorage.setItem(
+          "completedTodos",
+          JSON.stringify(newCompletedTodos)
+        );
+
+        let newTodos = [...todos, add];
+        localStorage.setItem("todos", JSON.stringify(newTodos));
+      }
+
       complete.splice(source.index, 1);
     }
 

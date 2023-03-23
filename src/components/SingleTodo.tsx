@@ -22,6 +22,27 @@ const SingleTodo: React.FC<Props> = ({ todo, setTodos, index }) => {
 
   const handleDelete = () => {
     setTodos((prev) => prev.filter((item) => item.id !== todo.id));
+
+    const todos = localStorage.getItem("todos");
+    const completedTodos = localStorage.getItem("completedTodos");
+
+    if (todos) {
+      localStorage.setItem(
+        "todos",
+        JSON.stringify(
+          JSON.parse(todos).filter((item: Todo) => item.id !== todo.id)
+        )
+      );
+    }
+
+    if (completedTodos) {
+      localStorage.setItem(
+        "completedTodos",
+        JSON.stringify(
+          JSON.parse(completedTodos).filter((item: Todo) => item.id !== todo.id)
+        )
+      );
+    }
   };
 
   const handleEdit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -40,6 +61,26 @@ const SingleTodo: React.FC<Props> = ({ todo, setTodos, index }) => {
         return item;
       })
     );
+
+    const todos = localStorage.getItem("todos");
+
+    if (todos) {
+      localStorage.setItem(
+        "todos",
+        JSON.stringify(
+          JSON.parse(todos).map((item: Todo) => {
+            if (item.id === todo.id) {
+              return {
+                ...item,
+                title: editInput.trim(),
+              };
+            }
+            return item;
+          })
+        )
+      );
+    }
+
     setIsEdit(false);
   };
 
