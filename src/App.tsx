@@ -45,6 +45,8 @@ const App: React.FC = () => {
 
   const onDragEnd = (result: DropResult) => {
     const { destination, source } = result;
+    console.log("destination", destination);
+    console.log("source", source);
 
     if (!destination) {
       return;
@@ -63,46 +65,25 @@ const App: React.FC = () => {
     // Source Logic
     if (source.droppableId === "TodosList") {
       add = active[source.index];
-
-      if (destination.droppableId !== "TodosList") {
-        add.isDone = true;
-        let newTodos = todos.filter((todo) => todo.id !== add.id);
-        localStorage.setItem("todos", JSON.stringify(newTodos));
-
-        let newCompletedTodos = [...completedTodos, add];
-        localStorage.setItem(
-          "completedTodos",
-          JSON.stringify(newCompletedTodos)
-        );
-      }
-
       active.splice(source.index, 1);
+
+      localStorage.setItem("todos", JSON.stringify(active));
     } else {
       add = complete[source.index];
-
-      if (destination.droppableId !== "TodosRemove") {
-        add.isDone = false;
-
-        let newCompletedTodos = completedTodos.filter(
-          (todo) => todo.id !== add.id
-        );
-        localStorage.setItem(
-          "completedTodos",
-          JSON.stringify(newCompletedTodos)
-        );
-
-        let newTodos = [...todos, add];
-        localStorage.setItem("todos", JSON.stringify(newTodos));
-      }
-
       complete.splice(source.index, 1);
+
+      localStorage.setItem("completedTodos", JSON.stringify(complete));
     }
 
     // Destination Logic
     if (destination.droppableId === "TodosList") {
+      add.isDone = false;
       active.splice(destination.index, 0, add);
+      localStorage.setItem("todos", JSON.stringify(active));
     } else {
+      add.isDone = true;
       complete.splice(destination.index, 0, add);
+      localStorage.setItem("completedTodos", JSON.stringify(complete));
     }
 
     setCompletedTodos(complete);
