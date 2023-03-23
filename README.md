@@ -42,4 +42,4 @@ npm start
 
 ## Screenshots
 
-...
+![image](https://user-images.githubusercontent.com/67144252/227330543-9ca84b7f-ce75-41d8-8405-d671cd5fbe27.png)
